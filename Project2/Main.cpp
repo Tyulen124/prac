@@ -41,10 +41,13 @@ double midRect(double a, double b, int n) {
 // Метод трапеций
 double trapezoid(double a, double b, int n) {
     double h = (b - a) / n;
-    double sum = (f(a) + f(b)) / 2.0;
-    for (int i = 1; i < n; ++i) {
-        sum += f(a + i * h);
+    double sum = 0;
+    for (int i = 0; i < n; i++) {
+        double x1 = a + i * h;
+        double x2 = a + (i + 1) * h;
+        sum += (f(x1) + f(x2)) / 2.0;  // (f(xi) + f(xi+1)) / 2
     }
+
     return h * sum;
 }
 
@@ -66,11 +69,11 @@ int main() {
     double a, b;
     int n;
 
-    std::wcout << " a: ";
+    std::wcout << L" a: ";
     std::wcin >> a;
-    std::wcout << " b: ";
+    std::wcout << L" b: ";
     std::wcin >> b;
-    std::wcout << " n: ";
+    std::wcout << L" n: ";
     std::wcin >> n;
 
     // Расчёт с шагом h
@@ -79,7 +82,7 @@ int main() {
     double M1 = midRect(a, b, n);
     double T1 = trapezoid(a, b, n);
 
-    // Расчёт с удвоенным числом разбиений (шаг h/2)
+    // Расчёт с удвоенным числом отрезков (шаг h/2)
     int n2 = 2 * n;
     double L2 = leftRect(a, b, n2);
     double R2 = rightRect(a, b, n2);
